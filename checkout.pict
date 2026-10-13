@@ -1,0 +1,21 @@
+# Modelo de pasarela de pagos PagoYa
+
+Dispositivo: Celular, Laptop, Tablet
+Pais: Ecuador, Colombia, Peru, Otro
+Metodo: Tarjeta, Billetera, Transferencia, Contraentrega
+Moneda: USD, COP, PEN
+Envio: Estandar, Express, Retiro
+Cupon: Ninguno, Bienvenida, Estudiante
+Monto: 10, 50, 500, 2000
+
+# Restricciones de negocio
+IF [Pais] = "Ecuador" THEN [Moneda] = "USD";
+IF [Pais] = "Colombia" THEN [Moneda] = "COP";
+IF [Pais] = "Peru" THEN [Moneda] = "PEN";
+IF [Pais] = "Otro" THEN [Moneda] = "USD";
+
+IF [Metodo] = "Contraentrega" THEN [Pais] IN {"Ecuador", "Colombia"};
+IF [Metodo] = "Billetera" THEN [Dispositivo] IN {"Celular", "Tablet"};
+IF [Envio] = "Express" THEN [Pais] <> "Otro";
+IF [Cupon] = "Bienvenida" THEN [Monto] IN {50, 500, 2000};
+IF [Monto] = 2000 THEN [Metodo] IN {"Tarjeta", "Transferencia"};
